@@ -698,7 +698,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   if (isTRUE(add_row_percentages)) {
     pl <- pl + ggplot2::geom_label(ggplot2::aes(label = .data$Prediction_Percentage_text),
       size = font_row_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("FN", "TN"), "#3C36C2", "forestgreen"), fill = "lightgrey", 
-      alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_PLC %in% c("FN", "TP"), -0.73, -0.08),
+      alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_PLC %in% c("FN", "TP"), -0.78, -0.04),
       nudge_y = font_row_percentages[["nudge_y"]], angle = font_row_percentages[["angle"]],
       family = font_row_percentages[["family"]], fontface = font_row_percentages[["fontface"]],
       hjust = font_row_percentages[["hjust"]], vjust = font_row_percentages[["vjust"]],
@@ -730,13 +730,14 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     isTRUE(add_arrows)) {
     pl <- pl + ggimage::geom_image(ggplot2::aes(image = .data$right_icon),
       by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
-        0.655, nudge_y = font_row_percentages[["nudge_y"]]
+        0.635, nudge_y = font_row_percentages[["nudge_y"]]
     ) +
       ggimage::geom_image(ggplot2::aes(image = .data$left_icon),
         by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
-        0.165, nudge_y = font_row_percentages[["nudge_y"]]
+        0.182, nudge_y = font_row_percentages[["nudge_y"]]
       )
   }
   pl
 }
+
 
