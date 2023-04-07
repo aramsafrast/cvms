@@ -219,22 +219,22 @@
 #'   ggplot2::labs(x = "True", y = "Guess")
 #' }
 plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction_col = "Prediction",
-         counts_col = "N", class_order = NULL, add_sums = FALSE, add_counts = TRUE,
-         add_normalized = TRUE, add_row_percentages = TRUE, add_col_percentages = TRUE,
-         diag_percentages_only = FALSE, rm_zero_percentages = TRUE,
-         rm_zero_text = TRUE, add_zero_shading = TRUE, add_arrows = TRUE,
-         counts_on_top = FALSE, palette = "Blues", intensity_by = "counts",
-         theme_fn = ggplot2::theme_minimal, place_x_axis_above = TRUE,
-         rotate_y_text = TRUE, digits = 1, font_counts = font(), font_normalized = font(),
-         font_row_percentages = font(), font_col_percentages = font(),
-         arrow_size = 0.048, arrow_nudge_from_text = 0.065, tile_border_color = NA,
-         tile_border_size = 0.1, tile_border_linetype = "solid", sums_settings = sum_tile_settings(),
-         darkness = 0.8) {
+                                  counts_col = "N", class_order = NULL, add_sums = FALSE, add_counts = TRUE,
+                                  add_normalized = TRUE, add_row_percentages = TRUE, add_col_percentages = TRUE,
+                                  diag_percentages_only = FALSE, rm_zero_percentages = TRUE,
+                                  rm_zero_text = TRUE, add_zero_shading = TRUE, add_arrows = TRUE,
+                                  counts_on_top = FALSE, palette = "Blues", intensity_by = "counts",
+                                  theme_fn = ggplot2::theme_minimal, place_x_axis_above = TRUE,
+                                  rotate_y_text = TRUE, digits = 1, font_counts = font(), font_normalized = font(),
+                                  font_row_percentages = font(), font_col_percentages = font(),
+                                  arrow_size = 0.048, arrow_nudge_from_text = 0.065, tile_border_color = NA,
+                                  tile_border_size = 0.1, tile_border_linetype = "solid", sums_settings = sum_tile_settings(),
+                                  darkness = 0.8) {
   if (length(intersect(class(conf_matrix), c(
     "cfm_results",
     "eval_results"
   ))) > 0 && "Confusion Matrix" %in% colnames(conf_matrix) &&
-    nrow(conf_matrix) > 0) {
+  nrow(conf_matrix) > 0) {
     if (nrow(conf_matrix) > 1) {
       warning(paste0(
         "'conf_matrix' has more than one row. Extracting first confu",
@@ -347,7 +347,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   if (!is.null(class_order)) {
     classes_in_data <- unique(conf_matrix[[target_col]])
     if (length(classes_in_data) != length(class_order) ||
-      length(setdiff(classes_in_data, class_order)) !=
+        length(setdiff(classes_in_data, class_order)) !=
         0) {
       assert_collection$push("when 'class_order' is specified, it must contain the same levels as 'conf_matrix'.")
     }
@@ -380,45 +380,45 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   font_bottom_size <- 2.8
   big_counts <- isTRUE(counts_on_top) || !isTRUE(add_normalized)
   font_counts <- update_font_setting(font_counts, defaults = list(size = ifelse(isTRUE(big_counts),
-    font_top_size, font_bottom_size
+                                                                                font_top_size, font_bottom_size
   ), digits = -1), initial_vals = list(nudge_y = function(x) {
     x + dplyr::case_when(!isTRUE(counts_on_top) && isTRUE(add_normalized) ~
-      -0.16, TRUE ~ 0)
+                           -0.16, TRUE ~ 0)
   }))
   font_normalized <- update_font_setting(font_normalized,
-    defaults = list(size = ifelse(!isTRUE(big_counts),
-      font_top_size, font_bottom_size
-    ), suffix = "%", digits = digits),
-    initial_vals = list(nudge_y = function(x) {
-      x + dplyr::case_when(isTRUE(counts_on_top) && isTRUE(add_counts) ~
-        -0.16, TRUE ~ 0)
-    })
+                                         defaults = list(size = ifelse(!isTRUE(big_counts),
+                                                                       font_top_size, font_bottom_size
+                                         ), suffix = "%", digits = digits),
+                                         initial_vals = list(nudge_y = function(x) {
+                                           x + dplyr::case_when(isTRUE(counts_on_top) && isTRUE(add_counts) ~
+                                                                  -0.16, TRUE ~ 0)
+                                         })
   )
   font_row_percentages <- update_font_setting(font_row_percentages,
-    defaults = list(
-      size = 2.35, prefix = "", suffix = "%",
-      fontface = "italic", digits = digits, alpha = 0.85
-    ),
-    initial_vals = list(nudge_x = function(x) {
-      x + 0.41
-    }, angle = function(x) {
-      x + 90
-    })
+                                              defaults = list(
+                                                size = 2.35, prefix = "", suffix = "%",
+                                                fontface = "italic", digits = digits, alpha = 0.85
+                                              ),
+                                              initial_vals = list(nudge_x = function(x) {
+                                                x + 0.41
+                                              }, angle = function(x) {
+                                                x + 90
+                                              })
   )
   font_col_percentages <- update_font_setting(font_col_percentages,
-    defaults = list(
-      size = 2.35, prefix = "", suffix = "%",
-      fontface = "italic", digits = digits, alpha = 0.85
-    ),
-    initial_vals = list(nudge_y = function(x) {
-      x - 0.41
-    })
+                                              defaults = list(
+                                                size = 2.35, prefix = "", suffix = "%",
+                                                fontface = "italic", digits = digits, alpha = 0.85
+                                              ),
+                                              initial_vals = list(nudge_y = function(x) {
+                                                x - 0.41
+                                              })
   )
   if (palette == "Greens" && is.null(sums_settings[["palette"]])) {
     sums_settings[["palette"]] <- "Blues"
   }
   sums_settings <- update_sum_tile_settings(sums_settings,
-    defaults = list()
+                                            defaults = list()
   )
   arrow_icons <- list(
     up = get_figure_path("caret_up_sharp.svg"),
@@ -427,27 +427,27 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   )
   arrow_size <- arrow_size / sqrt(nrow(conf_matrix))
   cm <- tibble::tibble(Target = factor(as.character(conf_matrix[[target_col]]),
-    levels = class_order
+                                       levels = class_order
   ), Prediction = factor(as.character(conf_matrix[[prediction_col]]),
-    levels = class_order
+                         levels = class_order
   ), N = as.integer(conf_matrix[[counts_col]]))
   cm <- calculate_normalized(cm)
   cm[["N_text"]] <- preprocess_numeric(cm[["N"]], font_counts,
-    rm_zero_text = rm_zero_text
+                                       rm_zero_text = rm_zero_text
   )
   cm[["Normalized_text"]] <- preprocess_numeric(cm[["Normalized"]],
-    font_normalized,
-    rm_zero_text = rm_zero_text, rm_zeroes_post_rounding = FALSE
+                                                font_normalized,
+                                                rm_zero_text = rm_zero_text, rm_zeroes_post_rounding = FALSE
   )
   cm <- set_intensity(cm, intensity_by)
   intensity_measures <- get_intensity_range(data = cm, intensity_by = intensity_by)
   cm <- set_arrows(cm,
-    place_x_axis_above = place_x_axis_above,
-    icons = arrow_icons
+                   place_x_axis_above = place_x_axis_above,
+                   icons = arrow_icons
   )
   if (isTRUE(use_ggimage) && isTRUE(add_zero_shading)) {
     cm[["image_skewed_lines"]] <- ifelse(cm[["N"]] == 0,
-      get_figure_path("skewed_lines.svg"), get_figure_path("empty_square.svg")
+                                         get_figure_path("skewed_lines.svg"), get_figure_path("empty_square.svg")
     )
   }
   if (isTRUE(add_col_percentages) || isTRUE(add_sums)) {
@@ -504,10 +504,10 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
       font_normalized
     )
     sum_data[nrow(sum_data), "N_text"] <- ifelse(isTRUE(counts_on_top),
-      sum_data[nrow(sum_data), "N"], ""
+                                                 sum_data[nrow(sum_data), "N"], ""
     )
     sum_data[nrow(sum_data), "Normalized_text"] <- ifelse(isTRUE(counts_on_top),
-      "", paste0(sum_data[nrow(sum_data), "N"])
+                                                          "", paste0(sum_data[nrow(sum_data), "N"])
     )
     sum_data <- set_intensity(sum_data, intensity_by)
     sums_intensity_measures <- get_intensity_range(data = head(
@@ -522,8 +522,8 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     sum_data[["is_sum"]] <- TRUE
     cm <- dplyr::bind_rows(cm, sum_data)
     cm[cm[["Target"]] == "Total" | cm[["Prediction"]] ==
-      "Total", ] <- empty_tile_percentages(cm[cm[["Target"]] ==
-      "Total" | cm[["Prediction"]] == "Total", ])
+         "Total", ] <- empty_tile_percentages(cm[cm[["Target"]] ==
+                                                   "Total" | cm[["Prediction"]] == "Total", ])
     if (isTRUE(place_x_axis_above)) {
       class_order <- c("Total", class_order)
     } else {
@@ -532,21 +532,21 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     class_labels <- class_order
     class_labels[class_labels == "Total"] <- sums_settings[["label"]]
     cm[["Target"]] <- factor(cm[["Target"]],
-      levels = class_order,
-      labels = class_labels
+                             levels = class_order,
+                             labels = class_labels
     )
     cm[["Prediction"]] <- factor(cm[["Prediction"]],
-      levels = class_order,
-      labels = class_labels
+                                 levels = class_order,
+                                 labels = class_labels
     )
   }
   if (isTRUE(diag_percentages_only)) {
     cm[cm[["Target"]] != cm[["Prediction"]], ] <- empty_tile_percentages(cm[cm[["Target"]] !=
-      cm[["Prediction"]], ])
+                                                                              cm[["Prediction"]], ])
   }
   if (isTRUE(rm_zero_percentages)) {
     cm[cm[["N"]] == 0, ] <- empty_tile_percentages(cm[cm[["N"]] ==
-      0, ])
+                                                        0, ])
   }
   color_limits <- get_color_limits(intensity_measures, darkness)
   pl <- cm %>% ggplot2::ggplot(ggplot2::aes(
@@ -556,7 +556,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     ggplot2::labs(
       x = "Target",
       y = "Prediction", fill = ifelse(intensity_by == "counts",
-        "N", "Normalized"
+                                      "N", "Normalized"
       ), label = "N"
     ) +
     ggplot2::geom_tile(
@@ -573,9 +573,9 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     ggplot2::guides(fill = "none") +
     ggplot2::theme(
       axis.text.y = ggplot2::element_text(angle = ifelse(isTRUE(rotate_y_text),
-        90, 0
+                                                         90, 0
       ), hjust = ifelse(isTRUE(rotate_y_text), 0.5,
-        1
+                        1
       ), vjust = ifelse(isTRUE(rotate_y_text), 0.5, 0)),
       axis.title.y = ggplot2::element_text(margin = ggplot2::margin(
         0,
@@ -592,7 +592,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     if (is.null(sums_settings[["tile_fill"]])) {
       pl <- pl + ggnewscale::new_scale_fill() + ggplot2::geom_tile(
         data = cm[cm[["is_sum"]] &
-          cm[["Target"]] != cm[["Prediction"]], ], mapping = ggplot2::aes(fill = .data$Intensity),
+                    cm[["Target"]] != cm[["Prediction"]], ], mapping = ggplot2::aes(fill = .data$Intensity),
         colour = sums_settings[["tile_border_color"]],
         linewidth = sums_settings[["tile_border_size"]],
         linetype = sums_settings[["tile_border_linetype"]],
@@ -604,7 +604,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     } else {
       pl <- pl + ggplot2::geom_tile(
         data = cm[cm[["is_sum"]] &
-          cm[["Target"]] != cm[["Prediction"]], ], fill = sums_settings[["tile_fill"]],
+                    cm[["Target"]] != cm[["Prediction"]], ], fill = sums_settings[["tile_fill"]],
         colour = sums_settings[["tile_border_color"]],
         linewidth = sums_settings[["tile_border_size"]],
         linetype = sums_settings[["tile_border_linetype"]],
@@ -613,26 +613,26 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     }
     pl <- pl + ggplot2::geom_tile(
       data = cm[cm[["is_sum"]] &
-        cm[["Target"]] == cm[["Prediction"]], ], colour = sums_settings[["tc_tile_border_color"]],
+                  cm[["Target"]] == cm[["Prediction"]], ], colour = sums_settings[["tc_tile_border_color"]],
       linewidth = sums_settings[["tc_tile_border_size"]],
       linetype = sums_settings[["tc_tile_border_linetype"]],
       fill = sums_settings[["tc_tile_fill"]]
     )
   }
   if (isTRUE(use_ggimage) && isTRUE(add_zero_shading) && any(cm[["N"]] ==
-    0)) {
+                                                             0)) {
     pl <- pl + ggimage::geom_image(ggplot2::aes(image = .data$image_skewed_lines),
-      by = "height", size = 0.9 / sqrt(nrow(cm))
+                                   by = "height", size = 0.9 / sqrt(nrow(cm))
     )
   }
   if (isTRUE(add_counts)) {
     text_geom <- purrr::partial(ggplot2::geom_text,
-      size = font_counts[["size"]],
-      alpha = font_counts[["alpha"]], nudge_x = font_counts[["nudge_x"]],
-      nudge_y = font_counts[["nudge_y"]], angle = font_counts[["angle"]],
-      family = font_counts[["family"]], fontface = font_counts[["fontface"]],
-      hjust = font_counts[["hjust"]], vjust = font_counts[["vjust"]],
-      lineheight = font_counts[["lineheight"]]
+                                size = font_counts[["size"]],
+                                alpha = font_counts[["alpha"]], nudge_x = font_counts[["nudge_x"]],
+                                nudge_y = font_counts[["nudge_y"]], angle = font_counts[["angle"]],
+                                family = font_counts[["family"]], fontface = font_counts[["fontface"]],
+                                hjust = font_counts[["hjust"]], vjust = font_counts[["vjust"]],
+                                lineheight = font_counts[["lineheight"]]
     )
     pl <- pl + text_geom(
       data = cm[!cm[["is_sum"]], ], ggplot2::aes(label = .data$N_text),
@@ -640,31 +640,31 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     )
     if (isTRUE(add_sums)) {
       tmp_color <- ifelse(is.null(sums_settings[["font_color"]]),
-        font_counts[["color"]], sums_settings[["font_color"]]
+                          font_counts[["color"]], sums_settings[["font_color"]]
       )
       tmp_tc_color <- ifelse(is.null(sums_settings[["tc_font_color"]]),
-        font_counts[["color"]], sums_settings[["tc_font_color"]]
+                             font_counts[["color"]], sums_settings[["tc_font_color"]]
       )
       pl <- pl + text_geom(
         data = cm[cm[["is_sum"]] & cm[["Target"]] !=
-          cm[["Prediction"]], ], ggplot2::aes(label = .data$N_text),
+                    cm[["Prediction"]], ], ggplot2::aes(label = .data$N_text),
         color = tmp_color
       )
       pl <- pl + text_geom(
         data = cm[cm[["is_sum"]] & cm[["Target"]] ==
-          cm[["Prediction"]], ], ggplot2::aes(label = .data$N_text),
+                    cm[["Prediction"]], ], ggplot2::aes(label = .data$N_text),
         color = tmp_tc_color
       )
     }
   }
   if (isTRUE(add_normalized)) {
     text_geom <- purrr::partial(ggplot2::geom_text,
-      size = font_normalized[["size"]],
-      alpha = font_normalized[["alpha"]], nudge_x = font_normalized[["nudge_x"]],
-      nudge_y = font_normalized[["nudge_y"]], angle = font_normalized[["angle"]],
-      family = font_normalized[["family"]], fontface = font_normalized[["fontface"]],
-      hjust = font_normalized[["hjust"]], vjust = font_normalized[["vjust"]],
-      lineheight = font_normalized[["lineheight"]]
+                                size = font_normalized[["size"]],
+                                alpha = font_normalized[["alpha"]], nudge_x = font_normalized[["nudge_x"]],
+                                nudge_y = font_normalized[["nudge_y"]], angle = font_normalized[["angle"]],
+                                family = font_normalized[["family"]], fontface = font_normalized[["fontface"]],
+                                hjust = font_normalized[["hjust"]], vjust = font_normalized[["vjust"]],
+                                lineheight = font_normalized[["lineheight"]]
     )
     pl <- pl + text_geom(
       data = cm[!cm[["is_sum"]], ], ggplot2::aes(label = .data$Normalized_text),
@@ -672,19 +672,19 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     )
     if (isTRUE(add_sums)) {
       tmp_color <- ifelse(is.null(sums_settings[["font_color"]]),
-        font_normalized[["color"]], sums_settings[["font_color"]]
+                          font_normalized[["color"]], sums_settings[["font_color"]]
       )
       tmp_tc_color <- ifelse(is.null(sums_settings[["tc_font_color"]]),
-        font_normalized[["color"]], sums_settings[["tc_font_color"]]
+                             font_normalized[["color"]], sums_settings[["tc_font_color"]]
       )
       pl <- pl + text_geom(
         data = cm[cm[["is_sum"]] & cm[["Target"]] !=
-          cm[["Prediction"]], ], ggplot2::aes(label = .data$Normalized_text),
+                    cm[["Prediction"]], ], ggplot2::aes(label = .data$Normalized_text),
         color = tmp_color
       )
       pl <- pl + text_geom(
         data = cm[cm[["is_sum"]] & cm[["Target"]] ==
-          cm[["Prediction"]], ], ggplot2::aes(label = .data$Normalized_text),
+                    cm[["Prediction"]], ], ggplot2::aes(label = .data$Normalized_text),
         color = tmp_tc_color
       )
     }
@@ -697,47 +697,45 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   }
   if (isTRUE(add_row_percentages)) {
     pl <- pl + ggplot2::geom_label(ggplot2::aes(label = .data$Prediction_Percentage_text),
-      size = font_row_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("FN", "TN"), "#3C36C2", "forestgreen"), fill = "lightgrey", 
-      alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_PLC %in% c("FN", "TP"), -0.78, -0.04),
-      nudge_y = font_row_percentages[["nudge_y"]], angle = font_row_percentages[["angle"]],
-      family = font_row_percentages[["family"]], fontface = font_row_percentages[["fontface"]],
-      hjust = font_row_percentages[["hjust"]], vjust = font_row_percentages[["vjust"]],
-      lineheight = font_row_percentages[["lineheight"]]
+                                   size = font_row_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("FN", "TN"), "#3C36C2", "forestgreen"), fill = "lightgrey", 
+                                   alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_PLC %in% c("FN", "TP"), -0.785, -0.035),
+                                   nudge_y = font_row_percentages[["nudge_y"]], angle = font_row_percentages[["angle"]],
+                                   family = font_row_percentages[["family"]], fontface = font_row_percentages[["fontface"]],
+                                   hjust = font_row_percentages[["hjust"]], vjust = font_row_percentages[["vjust"]],
+                                   lineheight = font_row_percentages[["lineheight"]]
     )
   }
   if (isTRUE(add_col_percentages)) {
     pl <- pl + ggplot2::geom_label(ggplot2::aes(label = .data$Class_Percentage_text),
-      size = font_col_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("TN", "FP") , "brown", "#765600"), fill = "lightgrey", 
-      alpha = font_col_percentages[["alpha"]], nudge_y = + ifelse(conf_matrix$Pos_PLC %in% c("TN", "FN"), -0.45, 0.45),
-      nudge_x = font_col_percentages[["nudge_x"]], angle = font_col_percentages[["angle"]],
-      family = font_col_percentages[["family"]], fontface = font_col_percentages[["fontface"]],
-      hjust = font_col_percentages[["hjust"]], vjust = font_col_percentages[["vjust"]],
-      lineheight = font_col_percentages[["lineheight"]]
+                                   size = font_col_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("TN", "FP") , "brown", "#765600"), fill = "lightgrey", 
+                                   alpha = font_col_percentages[["alpha"]], nudge_y = + ifelse(conf_matrix$Pos_PLC %in% c("TN", "FN"), -0.45, 0.45),
+                                   nudge_x = font_col_percentages[["nudge_x"]], angle = font_col_percentages[["angle"]],
+                                   family = font_col_percentages[["family"]], fontface = font_col_percentages[["fontface"]],
+                                   hjust = font_col_percentages[["hjust"]], vjust = font_col_percentages[["vjust"]],
+                                   lineheight = font_col_percentages[["lineheight"]]
     )
   }
   if (isTRUE(use_ggimage) && isTRUE(add_col_percentages) &&
-    isTRUE(add_arrows)) {
+      isTRUE(add_arrows)) {
     pl <- pl + ggimage::geom_image(ggplot2::aes(image = .data$down_icon),
-      by = "height", size = arrow_size, nudge_x = font_col_percentages[["nudge_x"]],
-      nudge_y = font_col_percentages[["nudge_y"]] + 0.795
+                                   by = "height", size = arrow_size, nudge_x = font_col_percentages[["nudge_x"]],
+                                   nudge_y = font_col_percentages[["nudge_y"]] + 0.795
     ) +
       ggimage::geom_image(ggplot2::aes(image = .data$up_icon),
-        by = "height", size = arrow_size, nudge_x = font_col_percentages[["nudge_x"]],
-        nudge_y = font_col_percentages[["nudge_y"]] + 0.023
+                          by = "height", size = arrow_size, nudge_x = font_col_percentages[["nudge_x"]],
+                          nudge_y = font_col_percentages[["nudge_y"]] + 0.023
       )
   }
   if (isTRUE(use_ggimage) && isTRUE(add_row_percentages) &&
-    isTRUE(add_arrows)) {
+      isTRUE(add_arrows)) {
     pl <- pl + ggimage::geom_image(ggplot2::aes(image = .data$right_icon),
-      by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
-        0.635, nudge_y = font_row_percentages[["nudge_y"]]
+                                   by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
+                                     0.635, nudge_y = font_row_percentages[["nudge_y"]]
     ) +
       ggimage::geom_image(ggplot2::aes(image = .data$left_icon),
-        by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
-        0.182, nudge_y = font_row_percentages[["nudge_y"]]
+                          by = "height", size = arrow_size, nudge_x = font_row_percentages[["nudge_x"]] -
+                            0.182, nudge_y = font_row_percentages[["nudge_y"]]
       )
   }
   pl
 }
-
-
