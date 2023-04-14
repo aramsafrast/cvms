@@ -554,8 +554,8 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     y = .data$Prediction, fill = .data$Intensity
   )) +
     ggplot2::labs(
-      x = "Target",
-      y = "Prediction", fill = ifelse(intensity_by == "counts",
+      x = "Actual class",
+      y = "Predicted class", fill = ifelse(intensity_by == "counts",
                                       "N", "Normalized"
       ), label = "N"
     ) +
