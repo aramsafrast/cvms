@@ -556,7 +556,7 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
     ggplot2::labs(
       x = "Actual class",
       y = "Predicted class", fill = ifelse(intensity_by == "counts",
-                                      "N", "Normalized"
+                                           "N", "Normalized"
       ), label = "N"
     ) +
     ggplot2::geom_tile(
@@ -697,8 +697,8 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   }
   if (isTRUE(add_row_percentages)) {
     pl <- pl + ggplot2::geom_label(ggplot2::aes(label = .data$Prediction_Percentage_text),
-                                   size = font_row_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("FN", "TN"), "#3C36C2", "forestgreen"), fill = "lightgrey", 
-                                   alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_PLC %in% c("FN", "TP"), -0.785, -0.035),
+                                   size = font_row_percentages[["size"]], color = ifelse(conf_matrix$Pos_LC %in% c("FN", "TN"), "#3C36C2", "forestgreen"), fill = "lightgrey", 
+                                   alpha = font_row_percentages[["alpha"]], nudge_x = font_row_percentages[["nudge_x"]] + ifelse(conf_matrix$Pos_LC %in% c("FN", "TP"), -0.785, -0.035),
                                    nudge_y = font_row_percentages[["nudge_y"]], angle = font_row_percentages[["angle"]],
                                    family = font_row_percentages[["family"]], fontface = font_row_percentages[["fontface"]],
                                    hjust = font_row_percentages[["hjust"]], vjust = font_row_percentages[["vjust"]],
@@ -707,8 +707,8 @@ plot_confusion_matrix <- function(conf_matrix, target_col = "Target", prediction
   }
   if (isTRUE(add_col_percentages)) {
     pl <- pl + ggplot2::geom_label(ggplot2::aes(label = .data$Class_Percentage_text),
-                                   size = font_col_percentages[["size"]], color = ifelse(conf_matrix$Pos_PLC %in% c("TN", "FP") , "brown", "#765600"), fill = "lightgrey", 
-                                   alpha = font_col_percentages[["alpha"]], nudge_y = + ifelse(conf_matrix$Pos_PLC %in% c("TN", "FN"), -0.45, 0.45),
+                                   size = font_col_percentages[["size"]], color = ifelse(conf_matrix$Pos_LC %in% c("TN", "FP") , "brown", "#765600"), fill = "lightgrey", 
+                                   alpha = font_col_percentages[["alpha"]], nudge_y = + ifelse(conf_matrix$Pos_LC %in% c("TN", "FN"), -0.45, 0.45),
                                    nudge_x = font_col_percentages[["nudge_x"]], angle = font_col_percentages[["angle"]],
                                    family = font_col_percentages[["family"]], fontface = font_col_percentages[["fontface"]],
                                    hjust = font_col_percentages[["hjust"]], vjust = font_col_percentages[["vjust"]],
